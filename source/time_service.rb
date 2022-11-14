@@ -45,6 +45,6 @@ class TimeService
                                    .map { |param| FORMAT[param.to_sym] }.join('-'))
     time = Time.now.strftime(format_params.select { |param| (param == 'hour') || (param == 'minute') || (param == 'second') }
                                      .map { |param| FORMAT[param.to_sym] }.join(':'))
-    "#{date}T#{time}"
+    "#{date} #{time}"
   end
 end
