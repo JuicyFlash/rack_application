@@ -1,26 +1,14 @@
 # frozen_string_literal: true
 
-require_relative 'time_service'
+require_relative 'time_formatter'
 
 class Router
 
-  ROUTES = { '/time': TimeService }.freeze
+  ROUTES = { '/time': TimeFormatter }.freeze
 
-  def call(env)
-    if check_path(env).nil?
-      [
-        404,
-        { 'Content-Type' => 'text/plain' },
-        ['Bad getaway']
-      ]
-    else
-      check_path(env).new.call(env)
-    end
-  end
+  def route!(path)
+    raise NameError, "Unknown route for [#{path.to_sym}]" if ROUTES[path.to_sym].nil?
 
-  private
-
-  def check_path(env)
-    ROUTES[env['REQUEST_PATH'].to_sym]
+    ROUTES[path.to_sym]
   end
 end
